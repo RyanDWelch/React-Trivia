@@ -1,6 +1,5 @@
 import React from 'react';
 import Question from './Question';
-import { decodeHTML, getRandomInt } from './Functions'
 import './App.css';
 
 const API_URL = 'https://opentdb.com';
@@ -12,8 +11,7 @@ export class App extends React.Component {
       isLoaded: false,
       questions: [],
       correct: [],
-      incorrect: [],
-      total: [],
+      incorrect: []
     };
   }
 
@@ -50,13 +48,11 @@ export class App extends React.Component {
   updateQuestions = (solution) => {
     if (solution) {
       this.setState({
-        correct: this.state.correct.concat("answer"),
-        total: this.state.correct.concat("answer")
+        correct: this.state.correct.concat("answer")
       });
     } else {
       this.setState({
-        incorrect: this.state.incorrect.concat("answer"),
-        total: this.state.correct.concat("answer")
+        incorrect: this.state.incorrect.concat("answer")
       });
     }
   }
@@ -67,7 +63,7 @@ export class App extends React.Component {
 
   render() {
 
-    var { isLoaded, questions, correct, incorrect, total } = this.state;
+    var { isLoaded, questions, correct, incorrect } = this.state;
 
     if (!isLoaded) {
       return (
@@ -78,7 +74,6 @@ export class App extends React.Component {
             <div className="stats">
               <div>Correct: {correct.length}</div>
               <div>Incorrect: {incorrect.length}</div>
-              <div>Total: {total.length}</div>
             </div>
           </div>
           <div className="questions-container">Loading Questions...</div>
@@ -93,7 +88,6 @@ export class App extends React.Component {
             <div className="stats">
               <div>Correct: {correct.length}</div>
               <div>Incorrect: {incorrect.length}</div>
-              <div>Total: {total.length}</div>
             </div>
           </div>
           <div className="questions-container">

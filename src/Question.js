@@ -33,6 +33,7 @@ export default class Question extends React.Component {
         answered: "beenanswered"
       })
       this.props.updateGame(true);
+      
     } else {
       this.setState({
         status: "incorrect",

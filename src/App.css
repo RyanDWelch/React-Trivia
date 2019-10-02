@@ -90,15 +90,17 @@
 .question.beenanswered {
   pointer-events: none;
   border-width: 3px;  
-  transition: 1.3s;
+  transition: .8s;
 }
 
 .question.beenanswered.incorrect {
   border-color: red;
+  background-color: #ff00001f;
 }
 
 .question.beenanswered.correct {
   border-color: green;
+  background-color: #00800040;
 }
 
 .stats {
