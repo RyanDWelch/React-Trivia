@@ -46,15 +46,17 @@
 
 .questions-container .question {
   flex-basis: calc(100% - 4%);
-  border: 1px solid #000;
+  border: 2px solid #000;
   border-radius: 10px;
   margin: 2%;
-  padding: 2%;
+  padding: 15px;
 }
 
 @media(min-width: 992px){
   .questions-container .question {
     flex-basis: calc(50% - 4%);
+    max-height: 250px;
+    height: 250px;
   }
 }
 
@@ -79,4 +81,42 @@
   cursor: pointer;
   color: white;
   background-color: black;
+}
+
+.question-title {
+  font-weight: 600;
+}
+
+.question.beenanswered {
+  pointer-events: none;
+  border-width: 3px;  
+  transition: 1.3s;
+}
+
+.question.beenanswered.incorrect {
+  border-color: red;
+}
+
+.question.beenanswered.correct {
+  border-color: green;
+}
+
+.stats {
+  display: flex;
+  max-width: 400px;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding: 40px 0px 10px;
+}
+
+
+button.update {
+  padding: 15px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+}
+button.update:hover {
+  cursor: pointer;
 }

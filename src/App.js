@@ -1,4 +1,5 @@
 import React from 'react';
+import Question from './Question';
 import { decodeHTML, getRandomInt } from './Functions'
 import './App.css';
 
@@ -8,10 +9,11 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: [],
       isLoaded: false,
+      questions: [],
       correct: [],
       incorrect: [],
+      total: [],
     };
   }
 
@@ -27,44 +29,10 @@ export class App extends React.Component {
     .then(res => res.json())
     .then(json => {
       this.setState({
-        questions: json.results,
         isLoaded: true,
+        questions: json.results
       });
     });
-  }
-
-  componentDidMount() {
-    this.getQuestions();
-  }
-
-  renderQuestion(props, i){
-    if (props.type === "multiple") {
-      // get all wrong answers, add correct one randomly
-      // const allAnswers = props.incorrect_answers;
-      // const randomNumber = getRandomInt(0,3);
-      // allAnswers.splice(randomNumber, 0, props.correct_answer)
-      return (
-        <div className="question multiple" key={i}>
-          <div className="question-title">{decodeHTML(props.question)}</div>
-          <div className="answers-container">
-            <div onClick={()=>this.checkAnswer(props, props.incorrect_answers[0])}>{decodeHTML(props.incorrect_answers[0])}</div>
-            <div onClick={()=>this.checkAnswer(props, props.incorrect_answers[1])}>{decodeHTML(props.incorrect_answers[1])}</div>
-            <div onClick={()=>this.checkAnswer(props, props.incorrect_answers[2])}>{decodeHTML(props.incorrect_answers[2])}</div>
-            <div onClick={()=>this.checkAnswer(props, props.correct_answer)}>{decodeHTML(props.correct_answer)}</div>
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div className="question boolean" key={i}>
-        <div className="question-title">{decodeHTML(props.question)}</div>
-          <div className="answers-container">
-            <div onClick={()=>this.checkAnswer(props,"True")}>True</div>
-            <div onClick={()=>this.checkAnswer(props,"False")}>False</div>
-          </div>
-        </div>
-      )
-    }
   }
 
   checkAnswer(props, answer) {
@@ -79,19 +47,38 @@ export class App extends React.Component {
     }
   }
 
+  updateQuestions = (solution) => {
+    if (solution) {
+      this.setState({
+        correct: this.state.correct.concat("answer"),
+        total: this.state.correct.concat("answer")
+      });
+    } else {
+      this.setState({
+        incorrect: this.state.incorrect.concat("answer"),
+        total: this.state.correct.concat("answer")
+      });
+    }
+  }
+  
+  componentDidMount() {
+    this.getQuestions();
+  }
+
   render() {
 
-    var { isLoaded, questions } = this.state;
+    var { isLoaded, questions, correct, incorrect, total } = this.state;
 
     if (!isLoaded) {
       return (
         <div className="App">
           <div className="header">
             <h1>Trivia Game!</h1>
-            <div className="navigation">
-              <button onClick={()=>this.getQuestions()}>Update Questions</button>
-              <div>Correct: {this.state.correct.length}</div>
-              <div>Incorrect: {this.state.incorrect.length}</div>
+            <button className="update" onClick={()=>this.getQuestions()}>Update Questions</button>
+            <div className="stats">
+              <div>Correct: {correct.length}</div>
+              <div>Incorrect: {incorrect.length}</div>
+              <div>Total: {total.length}</div>
             </div>
           </div>
           <div className="questions-container">Loading Questions...</div>
@@ -102,26 +89,23 @@ export class App extends React.Component {
         <div className="App">
           <div className="header">
             <h1>Trivia Game!</h1>
-            <div className="navigation">
-              <button onClick={()=>this.getQuestions()}>Update Questions</button>
-              <div>Correct: {this.state.correct.length}</div>
-              <div>Incorrect: {this.state.incorrect.length}</div>
+            <button className="update" onClick={()=>this.getQuestions()}>Update Questions</button>
+            <div className="stats">
+              <div>Correct: {correct.length}</div>
+              <div>Incorrect: {incorrect.length}</div>
+              <div>Total: {total.length}</div>
             </div>
           </div>
           <div className="questions-container">
             {questions.map((question, i) =>
-              this.renderQuestion(question, i)
+              <Question data={question} key={i} updateGame={this.updateQuestions} />
             )}
           </div>
         </div>
       )
     }
   }
+
 }
 
 export default App;
-
-
-// {questions.map((question, i) =>
-//   <Question data={question} key={i}/>
-// )}

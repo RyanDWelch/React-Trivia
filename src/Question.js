@@ -10,7 +10,8 @@ export default class Question extends React.Component {
       type: this.props.data.type,
       answer: this.props.data.correct_answer,
       incorrect_answers: [],
-      status: null
+      status: null,
+      answered: null
     }
   }
   
@@ -28,12 +29,16 @@ export default class Question extends React.Component {
   checkAnswer(answer) {
     if (answer === this.props.data.correct_answer) {
       this.setState({
-        status: "Correct!"
+        status: "correct",
+        answered: "beenanswered"
       })
+      this.props.updateGame(true);
     } else {
       this.setState({
-        status: "Incorrect!"
+        status: "incorrect",
+        answered: "beenanswered"
       })
+      this.props.updateGame(false);
     }
   }
   
@@ -43,7 +48,7 @@ export default class Question extends React.Component {
 
     if (type === "multiple") {
       return (
-        <div className="question-container multiple">
+        <div className={`question multiple ${this.state.answered} ${this.state.status}`}>
           <div className="question-title">{question}</div>
           <div className="answers-container">
             <div onClick={()=>this.checkAnswer(incorrect_answers[0])}>{decodeHTML(incorrect_answers[0])}</div>
@@ -58,7 +63,7 @@ export default class Question extends React.Component {
       )
     } else {
       return (
-        <div className="question-container boolean">
+        <div className={`question boolean ${this.state.answered} ${this.state.status}`}>
         <div className="question-title">{question}</div>
           <div className="answers-container">
             <div onClick={()=>this.checkAnswer("True")}>True</div>
