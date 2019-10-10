@@ -15,7 +15,7 @@ export class App extends React.Component {
     };
   }
 
-  getQuestions(amount=4, category=-1, difficulty='Mixed') {
+  getQuestions(amount=8, category=-1, difficulty='Mixed') {
     this.setState({
       isLoaded: false,
     });
@@ -33,19 +33,7 @@ export class App extends React.Component {
     });
   }
 
-  checkAnswer(props, answer) {
-    if (answer === props.correct_answer) {
-      this.setState({
-        correct: this.state.correct.concat(answer),
-      });
-    } else {
-      this.setState({
-        incorrect: this.state.incorrect.concat(answer)
-      });
-    }
-  }
-
-  updateQuestions = (solution) => {
+  updateStats = (solution) => {
     if (solution) {
       this.setState({
         correct: this.state.correct.concat("answer")
@@ -92,7 +80,7 @@ export class App extends React.Component {
           </div>
           <div className="questions-container">
             {questions.map((question, i) =>
-              <Question data={question} key={i} updateGame={this.updateQuestions} />
+              <Question data={question} key={i} updateGame={this.updateStats} />
             )}
           </div>
         </div>

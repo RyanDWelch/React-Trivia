@@ -11,7 +11,7 @@ export default class Question extends React.Component {
       answer: this.props.data.correct_answer,
       incorrect_answers: [],
       status: null,
-      answered: null
+      answered: false
     }
   }
   
@@ -27,7 +27,7 @@ export default class Question extends React.Component {
   }
 
   checkAnswer(answer) {
-    if (answer === this.props.data.correct_answer) {
+    if (answer === this.state.answer) {
       this.setState({
         status: "correct",
         answered: "beenanswered"
@@ -45,7 +45,7 @@ export default class Question extends React.Component {
   
   render() {
 
-    const { incorrect_answers, question, status, type } = this.state;
+    const { incorrect_answers, question, answer, type } = this.state;
 
     if (type === "multiple") {
       return (
@@ -58,7 +58,7 @@ export default class Question extends React.Component {
             <div onClick={()=>this.checkAnswer(incorrect_answers[3])}>{decodeHTML(incorrect_answers[3])}</div>
           </div>
           <div className="answer-status">
-            {status}
+            {answer}
           </div>
         </div>
       )
@@ -71,7 +71,7 @@ export default class Question extends React.Component {
             <div onClick={()=>this.checkAnswer("False")}>False</div>
           </div>
           <div className="answer-status">
-            {status}
+            {answer}
           </div>
         </div>
       )

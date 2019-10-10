@@ -93,6 +93,17 @@
   transition: .8s;
 }
 
+
+.answer-status {
+  display: none;
+  font-weight: 600;
+  padding: 10px 0px;
+}
+
+.question.beenanswered .answer-status {
+  display: block;
+}
+
 .question.beenanswered.incorrect {
   border-color: red;
   background-color: #ff00001f;
@@ -102,6 +113,8 @@
   border-color: green;
   background-color: #00800040;
 }
+
+
 
 .stats {
   display: flex;
